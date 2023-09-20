@@ -103,15 +103,55 @@ public class Main {
 						
 					}
 					if (foundIntdex == -1) {
-						System.out.printf("%d번 게시물은 없습니다.", id);
+						System.out.printf("%d번 게시물은 없습니다.\n", id);
 						continue;
 					}
 					
 					articles.remove(foundIntdex);
-					System.out.printf("%d번 게시물을 삭제했습니다..", id);
+					System.out.printf("%d번 게시물을 삭제했습니다.\n", id);
 					
+					
+				} 
+				else if (command.startsWith("article modify")) {
+					
+					String[] commandDiv = command.split(" "); 
+					
+					if (commandDiv.length == 2) {
+						System.out.println("게시물 번호를 입력하지 않았습니다.");
+						continue;
+					}
+					
+					
+					int id = Integer.parseInt(commandDiv[2]);
+					
+					
+					boolean found = false;
+					
+					for (int i = 0; i < articles.size(); i++) {
+						
+						Article article = articles.get(i);
+						
+						if (article.id == id) {
+							
+							found = true;
+							
+							System.out.printf("제목 : %s\n", article.title);
+							System.out.printf("내용 : %s\n", article.body);
+							break;
+						}
+						
+					}
+					
+					if (found == false) {
+						
+						System.out.printf("%d번 게시물은 없습니다.\n", id);
+						continue;
+						
+					}
 					
 				}
+			
+			
 				
 				else {
 					System.out.println("존재하지 않는 명령어입니다");
