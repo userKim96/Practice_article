@@ -4,14 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class Main {
+	
+	static List<Article> articles = new ArrayList<Article>();
+	
 	public static void main(String[] args) {
-		System.out.println("== 프로그램 시작 ==");
-		Scanner sc = new Scanner(System.in);
-		int lastArticleId = 0;
-		List<Article> articles = new ArrayList<Article>();
 		
-		LocalDateTime now = LocalDateTime.now();
-		 
+		System.out.println("== 프로그램 시작 ==");
+		
+		Scanner sc = new Scanner(System.in);
+		
+		int lastArticleId = 3;
+		
+
+		
+		makeTestData();
+		
+		
 		while (true) {
 			System.out.printf("명령어 ) ");
 			String command = sc.nextLine().trim();
@@ -35,7 +43,7 @@ public class Main {
 			} else if (command.equals("article write")) {
 				int id = lastArticleId + 1;
 				int view = 0;
-				String regdate = now.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초"));
+				String regdate = Util.getNow();
 				System.out.printf("제목 : ");
 				String title = sc.nextLine();
 				System.out.printf("내용 : ");
@@ -163,6 +171,18 @@ public class Main {
 			System.out.println("== 프로그램 종료 ==");
 			sc.close();
 		}
+
+	private static void makeTestData() {
+		
+		System.out.println("테스트 게시물 생성완료.");
+		for (int i = 0; i < 3; i++) {
+			
+			articles.add(new Article( i + 1,  i, Util.getNow(),  "제목" + (i+1),  "내용" + (i+1)));
+			
+			
+		}
+	}
+	
 	}
 	class Article {
 		int id;
@@ -173,7 +193,7 @@ public class Main {
 		Article(int id, int view, String regDate, String title, String body) {
 			this.id = id;
 			this.view = view;
-			this.regDate = regDate;
+			this.regDate = Util.getNow();
 			this.title = title;
 			this.body = body;
 		}
