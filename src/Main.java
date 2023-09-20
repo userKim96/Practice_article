@@ -26,20 +26,21 @@ public class Main {
 				if (articles.size() == 0) {
 					System.out.println("게시글이 없습니다");
 				} else {
-					System.out.println("번호   /    제목   ");
+					System.out.println("번호   /    제목   /    조회");
 					for (int i = articles.size() - 1; i >= 0; i--) {
 						Article article = articles.get(i);
-						System.out.printf(" %d     /   %s  \n", article.id, article.title);
+						System.out.printf(" %d     /   %s     /   %d\n", article.id, article.title, article.view);
 					}
 				}
 			} else if (command.equals("article write")) {
 				int id = lastArticleId + 1;
+				int view = 0;
 				String regdate = now.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초"));
 				System.out.printf("제목 : ");
 				String title = sc.nextLine();
 				System.out.printf("내용 : ");
 				String body = sc.nextLine();
-				Article article = new Article(id, regdate, title, body);
+				Article article = new Article(id, view, regdate, title, body);
 				articles.add(article);
 				System.out.printf("%d번글이 생성되었습니다.\n", id);
 				lastArticleId++;
@@ -63,6 +64,7 @@ public class Main {
 						Article article = articles.get(i);
 						if (article.id == id) {
 							found = true;
+							article.view++;
 							System.out.println("번호 : " + article.id);
 							System.out.println("날짜 : " + article.regDate);
 							System.out.println("제목 : " + article.title);
@@ -164,11 +166,13 @@ public class Main {
 	}
 	class Article {
 		int id;
+		int view;
 		String regDate;
 		String title;
 		String body;
-		Article(int id, String regDate, String title, String body) {
+		Article(int id, int view, String regDate, String title, String body) {
 			this.id = id;
+			this.view = view;
 			this.regDate = regDate;
 			this.title = title;
 			this.body = body;
