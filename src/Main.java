@@ -44,11 +44,12 @@ public class Main {
 				int id = lastArticleId + 1;
 				int view = 0;
 				String regdate = Util.getNow();
+				String modifyTime = Util.getNow();
 				System.out.printf("제목 : ");
 				String title = sc.nextLine();
 				System.out.printf("내용 : ");
 				String body = sc.nextLine();
-				Article article = new Article(id, view, regdate, title, body);
+				Article article = new Article(id, view, regdate, modifyTime, title, body);
 				articles.add(article);
 				System.out.printf("%d번글이 생성되었습니다.\n", id);
 				lastArticleId++;
@@ -74,7 +75,8 @@ public class Main {
 							found = true;
 							article.view++;
 							System.out.println("번호 : " + article.id);
-							System.out.println("날짜 : " + article.regDate);
+							System.out.println("작성일 : " + article.regDate);
+							System.out.println("수정일 : " + article.modifyTime);
 							System.out.println("제목 : " + article.title);
 							System.out.println("내용 : " + article.body);
 							break;
@@ -127,7 +129,7 @@ public class Main {
 					String[] commandDiv = command.split(" "); 
 					
 					if (commandDiv.length == 2) {
-						System.out.println("게시물 번호를 입력하지 않았습니다.");
+						System.out.println("게시물 번호를 확인해주세요");
 						continue;
 					}
 					
@@ -145,8 +147,15 @@ public class Main {
 							
 							found = true;
 							
-							System.out.printf("제목 : %s\n", article.title);
-							System.out.printf("내용 : %s\n", article.body);
+							System.out.println("제목 : ");
+							String title = sc.nextLine();
+							
+							System.out.println("내용 : ");
+							String body = sc.nextLine();
+							
+							article.title = title;
+							article.body = body;
+							article.modifyTime = Util.getNow();
 							break;
 						}
 						
@@ -177,7 +186,7 @@ public class Main {
 		System.out.println("테스트 게시물 생성완료.");
 		for (int i = 0; i < 3; i++) {
 			
-			articles.add(new Article( i + 1,  i, Util.getNow(),  "제목" + (i+1),  "내용" + (i+1)));
+			articles.add(new Article( i + 1,  i, Util.getNow(), Util.getNow(),  "제목" + (i+1),  "내용" + (i+1)));
 			
 			
 		}
@@ -188,12 +197,14 @@ public class Main {
 		int id;
 		int view;
 		String regDate;
+		String modifyTime;
 		String title;
 		String body;
-		Article(int id, int view, String regDate, String title, String body) {
+		Article(int id, int view, String regDate,String modifyTime , String title, String body) {
 			this.id = id;
 			this.view = view;
 			this.regDate = Util.getNow();
+			this.modifyTime = Util.getNow();
 			this.title = title;
 			this.body = body;
 		}
